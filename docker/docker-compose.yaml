@@ -1,0 +1,16 @@
+version: "3.9"
+services:
+  postgres_db_rust:
+    image: postgres
+    restart: always
+    command: -p 5434
+    env_file:
+    - ./.env
+    expose:
+      - 5434
+    ports:
+      - "5434:5434"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+volumes:
+  postgres_data:
