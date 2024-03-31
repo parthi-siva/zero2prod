@@ -1,3 +1,4 @@
+use secrecy::ExposeSecret;
 use sqlx::PgPool;
 use std::net::TcpListener;
 use zero2prod::telemetry::{get_subscriber, init_subscriber};
@@ -10,7 +11,7 @@ async fn main() -> std::io::Result<()> {
     let configuration = get_configuration().expect("Failed to get configuration");
     let connection_string = configuration.database.connection_string();
 
-    let connection_pool = PgPool::connect(&connection_string)
+    let connection_pool = PgPool::connect(&connection_string.expose_secret())
         .await
         .expect("Failed to connect");
 
